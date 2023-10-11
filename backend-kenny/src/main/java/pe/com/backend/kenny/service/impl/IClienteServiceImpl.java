@@ -29,8 +29,8 @@ public class IClienteServiceImpl implements IClienteService{
         objClienteAct.setDni_cliente(objCliente.getDni_cliente());
         objClienteAct.setFec_nac_cliente(objCliente.getFec_nac_cliente());
         objClienteAct.setEdad_cliente(objCliente.getEdad_cliente());
-        objClienteAct.setEmail_cliente(objCliente.getEmail_cliente());
-        objClienteAct.setClave_cliente(objCliente.getClave_cliente());
+        objClienteAct.setCorreo(objCliente.getCorreo());
+        objClienteAct.setClave(objCliente.getClave());
         objClienteAct.setEstado_cliente(objCliente.getEstado_cliente());
         return clienteRepo.save(objClienteAct);
     }
@@ -52,5 +52,12 @@ public class IClienteServiceImpl implements IClienteService{
         // listar clientes
         return clienteRepo.findAll();
     }
+
+    @Override
+	public List<Cliente> buscarClientePorCorreo(String correo) 
+	{
+		return this.clienteRepo.findByCorreo(correo);
+	}
+
     
 }

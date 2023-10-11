@@ -39,10 +39,10 @@ public class Cliente {
     private int edad_cliente;
 
     @Column(name = "email_cliente")
-    private String email_cliente;
+    private String correo;
 
     @Column(name = "clave_cliente")
-    private String clave_cliente;
+    private String clave;
 
     @Column(name = "estado_cliente")
     private int estado_cliente;

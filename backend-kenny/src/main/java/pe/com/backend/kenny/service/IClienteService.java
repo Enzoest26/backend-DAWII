@@ -11,5 +11,5 @@ public interface IClienteService {
     public Cliente actualizarCliente(Cliente objCliente);
     public void eliminarCliente(int idcliente);
     public Boolean existeCliente(Integer id);
-
+    public List<Cliente> buscarClientePorCorreo(String correo);
 }
