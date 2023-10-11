@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-BackendKennyApplication<kenny>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "pe.com.backend.kenny.BackendKennyApplication",
+            "projectName": "kenny",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
