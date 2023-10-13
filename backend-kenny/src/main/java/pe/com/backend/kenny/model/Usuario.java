@@ -43,6 +43,9 @@ public class Usuario
 	@Column(name = "edad_usuario")
 	private Integer edad;
 	
+	@Column(name = "estado_usuario")
+	private Integer estado;
+	
 	@ManyToOne
 	@JoinColumn(name = "id_tipo_usuario")
 	private TipoUsuario tipoUsuario;
