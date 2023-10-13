@@ -1,0 +1,136 @@
+package pe.com.backend.kenny.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import pe.com.backend.kenny.model.Bebida;
+import pe.com.backend.kenny.model.CategoriaBebida;
+import pe.com.backend.kenny.model.TamanioBebida;
+import pe.com.backend.kenny.model.TipoBebida;
+import pe.com.backend.kenny.model.request.BebidaActualizarRequest;
+import pe.com.backend.kenny.model.request.BebidaRegistrarRequest;
+import pe.com.backend.kenny.model.response.BaseResponse;
+import pe.com.backend.kenny.repository.BebidaRepository;
+import pe.com.backend.kenny.repository.CategoriaBebidaRepository;
+import pe.com.backend.kenny.repository.TamanioBebidaRepository;
+import pe.com.backend.kenny.repository.TipoBebidaRepository;
+import pe.com.backend.kenny.service.BebidaService;
+
+@Service
+public class BebidaServiceImpl implements BebidaService{
+
+	@Autowired
+	private BebidaRepository repoBebida;
+	
+	@Autowired
+	private CategoriaBebidaRepository repoCategoria;
+	
+	@Autowired
+	private TipoBebidaRepository repoTipo;
+	
+	@Autowired
+	private TamanioBebidaRepository repoTamanio;
+	
+	
+	@Override
+	public List<Bebida> listadoTodasBebidas() {	
+		return repoBebida.findAll();
+	}
+
+	@Override
+	public List<Bebida> listadoBebidasEstadoActivo() {
+		return repoBebida.findByEstadoBebida(1);
+	}
+
+	@Override
+	public Bebida registrarBebida(BebidaRegistrarRequest request) {
+		Bebida bebidaNueva = new Bebida();
+		
+		CategoriaBebida categoriaBebida = repoCategoria.findById(request.getIdCategoriaBebida()).orElse(null);
+		TipoBebida tipoBebida = repoTipo.findById(request.getIdTipoBebida()).orElse(null);
+		TamanioBebida tamanioBebida = repoTamanio.findById(request.getIdTamanioBebida()).orElse(null);
+		
+		if(categoriaBebida == null || tipoBebida == null || tamanioBebida == null) {
+			System.out.println(categoriaBebida + " - " + tipoBebida + " - " + tamanioBebida );
+			return null;
+		}
+		
+		bebidaNueva.setIdBebida(generarCodigoBebida());
+		bebidaNueva.setDescripcionBebida(request.getDescripcionBebida());
+		bebidaNueva.setPrecioBebida(request.getPrecioBebida());
+		bebidaNueva.setStockBebida(request.getStockBebida());
+		bebidaNueva.setEstadoBebida(1);
+		bebidaNueva.setCategoriaBebida(categoriaBebida);
+		bebidaNueva.setTipoBebida(tipoBebida);
+		bebidaNueva.setTamanioBebida(tamanioBebida);
+		
+		return repoBebida.save(bebidaNueva);
+	}
+	
+	private String generarCodigoBebida() {
+		int contador;
+
+		String ultimoIdRegistrado = repoBebida.getUltimoIdBebida(); //B006
+		
+		String parteNumerica = ultimoIdRegistrado.substring(1); //006
+		
+		contador = Integer.parseInt(parteNumerica) + 1; //7
+			
+		String codigo = String.format("B%03d", contador);
+		contador ++;
+		return codigo;
+	}
+
+	@Override
+	public BaseResponse actualizarBebida(String idBebida, BebidaActualizarRequest request) {
+		Bebida bebida = repoBebida.findById(idBebida).orElse(null);
+		CategoriaBebida categoriaBebida = repoCategoria.findById(request.getIdCategoriaBebida()).orElse(null);
+		TipoBebida tipoBebida = repoTipo.findById(request.getIdTipoBebida()).orElse(null);
+		TamanioBebida tamanioBebida = repoTamanio.findById(request.getIdTamanioBebida()).orElse(null);
+		
+		if(bebida == null || categoriaBebida == null || tipoBebida == null || tamanioBebida == null) {
+			System.out.println(bebida + " - " + categoriaBebida + " - " + tipoBebida + " - " + tamanioBebida );
+			return BaseResponse.builder()
+					.codRespuesta("0")
+					.msjRespuesta("Ocurrió un error al actualizar")
+					.build();
+		}
+		
+		bebida.setDescripcionBebida(request.getDescripcionBebida());
+		bebida.setPrecioBebida(request.getPrecioBebida());
+		bebida.setStockBebida(request.getStockBebida());
+		bebida.setEstadoBebida(request.getEstadoBebida());
+		bebida.setCategoriaBebida(categoriaBebida);
+		bebida.setTipoBebida(tipoBebida);
+		bebida.setTamanioBebida(tamanioBebida);
+		repoBebida.save(bebida);
+		
+		return BaseResponse.builder()
+				.codRespuesta("1")
+				.msjRespuesta("Bebida con id " + idBebida + " actualizada con éxito")
+				.build();		
+	}
+
+	@Override
+	public BaseResponse eliminarBebida(String idBebida) {
+		Bebida bebida = repoBebida.findById(idBebida).orElse(null);
+		
+		if(bebida == null) {
+			return BaseResponse.builder()
+					.codRespuesta("0")
+					.msjRespuesta("La bebida no existe")
+					.build();
+		}
+		
+		//Eliminación lógica -> Estado = 0 (inactivo)
+		bebida.setEstadoBebida(0);
+		repoBebida.save(bebida);
+		return BaseResponse.builder()
+				.codRespuesta("1")
+				.msjRespuesta("Se eliminó la bebida con id " + idBebida)
+				.build();
+	}
+
+}
