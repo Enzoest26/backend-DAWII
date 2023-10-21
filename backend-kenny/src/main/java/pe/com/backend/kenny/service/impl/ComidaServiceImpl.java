@@ -42,28 +42,30 @@ public class ComidaServiceImpl implements IComidaService {
 			objComidaAct.setEstadoComida(objComida.getEstadoComida());
 			repoComida.save(objComidaAct);
 			return BaseResponse.builder()
-					.codRespuesta("0")
+					.codRespuesta("1")
 					.msjRespuesta("Se actualizó correctamente")
 					.build();
 		}
 		return BaseResponse.builder()
-				.codRespuesta("1")
+				.codRespuesta("0")
 				.msjRespuesta("Comida no existente")
 				.build();
 	}
 
 	@Override
 	public BaseResponse eliminarComida(String idComida) {
-		if (repoComida.existsById(idComida)) {
-			repoComida.deleteById(idComida);
+		Comida comida = repoComida.findById(idComida).orElse(null);
+		if (comida == null) {
 			return BaseResponse.builder()
 					.codRespuesta("0")
-					.msjRespuesta("Se eliminó correctamente")
+					.msjRespuesta("Comida no existente")
 					.build();
 		}
+		comida.setEstadoComida(0);
+		repoComida.save(comida);
 		return BaseResponse.builder()
 				.codRespuesta("1")
-				.msjRespuesta("Comida no existente")
+				.msjRespuesta("Se eliminó correctamente")
 				.build();
 	}
 
