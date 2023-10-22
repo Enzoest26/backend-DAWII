@@ -55,11 +55,17 @@ public class UsuarioServiceImpl implements IUsuarioService
 	public BaseResponse eliminarUsuario(Integer id) {
 		if(this.usuarioRepository.existsById(id))
 		{
-			this.usuarioRepository.deleteById(id);
-			return BaseResponse.builder()
-					.codRespuesta("0")
-					.msjRespuesta("Eliminación Exitosa")
-					.build();
+			Usuario usuario = this.usuarioRepository.findById(id).orElse(null);
+			if(usuario != null)
+			{
+				usuario.setEstado(0);
+				this.usuarioRepository.save(usuario);
+				return BaseResponse.builder()
+						.codRespuesta("0")
+						.msjRespuesta("Eliminación Exitosa")
+						.build();
+			}
+			
 		}
 		return BaseResponse.builder()
 				.codRespuesta("1")
