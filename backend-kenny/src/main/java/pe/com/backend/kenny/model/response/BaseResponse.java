@@ -15,4 +15,7 @@ public class BaseResponse {
 
     @JsonInclude(value = Include.NON_NULL)
     private String msjRespuesta;
+    
+    @JsonInclude(value = Include.NON_NULL)
+	public String descripcion;
 }

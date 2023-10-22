@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import pe.com.backend.kenny.exception.ItemNoEncontradoException;
 import pe.com.backend.kenny.model.Usuario;
 import pe.com.backend.kenny.model.response.BaseResponse;
 import pe.com.backend.kenny.repository.IUsuarioRepository;
 import pe.com.backend.kenny.service.ITipoUsuarioService;
 import pe.com.backend.kenny.service.IUsuarioService;
+import pe.com.backend.kenny.util.Constantes;
 
 @Service
 public class UsuarioServiceImpl implements IUsuarioService
@@ -41,14 +43,11 @@ public class UsuarioServiceImpl implements IUsuarioService
 			usuario.setClave(this.passwordEncoder.encode(usuario.getClave()));
 			this.usuarioRepository.save(usuario);
 			return BaseResponse.builder()
-					.codRespuesta("0")
-					.msjRespuesta("Actualización Exitosa")
+					.codRespuesta(Constantes.CODIGO_EXITO_ACTUALIZACION)
+					.msjRespuesta(Constantes.MENSAJE_EXITO_ACTUALIZACION)
 					.build();
 		}
-		return BaseResponse.builder()
-				.codRespuesta("1")
-				.msjRespuesta("Usuario no existe")
-				.build();
+		throw new ItemNoEncontradoException("Usuario no encontrado");
 	}
 
 	@Override
@@ -61,16 +60,13 @@ public class UsuarioServiceImpl implements IUsuarioService
 				usuario.setEstado(0);
 				this.usuarioRepository.save(usuario);
 				return BaseResponse.builder()
-						.codRespuesta("0")
-						.msjRespuesta("Eliminación Exitosa")
+						.codRespuesta(Constantes.CODIGO_EXITO_ELIMINACION)
+						.msjRespuesta(Constantes.MENSAJE_EXITO_ELIMINACION)
 						.build();
 			}
 			
 		}
-		return BaseResponse.builder()
-				.codRespuesta("1")
-				.msjRespuesta("Usuario no existe")
-				.build();
+		throw new ItemNoEncontradoException("Usuario no encontrado");
 	}
 
 }
