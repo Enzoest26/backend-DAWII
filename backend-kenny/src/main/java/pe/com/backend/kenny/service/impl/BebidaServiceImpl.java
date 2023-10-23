@@ -70,15 +70,20 @@ public class BebidaServiceImpl implements BebidaService{
 	}
 	
 	private String generarCodigoBebida() {
+		String codigo;
 		int contador;
 
 		String ultimoIdRegistrado = repoBebida.getUltimoIdBebida(); //B006
+		
+		if(ultimoIdRegistrado == null) {
+			return codigo = "B001";
+		}
 		
 		String parteNumerica = ultimoIdRegistrado.substring(1); //006
 		
 		contador = Integer.parseInt(parteNumerica) + 1; //7
 			
-		String codigo = String.format("B%03d", contador);
+		codigo = String.format("B%03d", contador);
 		contador ++;
 		return codigo;
 	}
