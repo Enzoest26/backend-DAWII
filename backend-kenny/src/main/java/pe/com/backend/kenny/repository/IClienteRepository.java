@@ -10,5 +10,5 @@ import pe.com.backend.kenny.model.Cliente;
 
 @Repository
 public interface IClienteRepository extends JpaRepository<Cliente, Integer>{
-    List<Cliente> findByEmail_cliente(String email);
+    List<Cliente> findByEmailCliente(String emailCliente);
 }

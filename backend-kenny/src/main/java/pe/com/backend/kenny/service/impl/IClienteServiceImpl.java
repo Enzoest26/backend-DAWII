@@ -33,7 +33,7 @@ public class IClienteServiceImpl implements IClienteService{
         objClienteAct.setDni_cliente(objCliente.getDni_cliente());
         objClienteAct.setFec_nac_cliente(objCliente.getFec_nac_cliente());
         objClienteAct.setEdad_cliente(objCliente.getEdad_cliente());
-        objClienteAct.setEmail_cliente(objCliente.getEmail_cliente());
+        objClienteAct.setEmailCliente(objCliente.getEmailCliente());
         objClienteAct.setClave_cliente(objCliente.getClave_cliente());
         objClienteAct.setEstado_cliente(objCliente.getEstado_cliente());
         return clienteRepo.save(objClienteAct);
@@ -60,7 +60,7 @@ public class IClienteServiceImpl implements IClienteService{
     @Override
 	public List<Cliente> buscarClientePorEmail(String email) 
 	{
-		return this.clienteRepo.findByEmail_cliente(email);
+		return this.clienteRepo.findByEmailCliente(email);
 	}
 
     

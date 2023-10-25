@@ -40,8 +40,8 @@ public class Cliente {
     @Column(name = "edad_cliente")
     private int edad_cliente;
 
-    @Column(name = "email_cliente")
-    private String email_cliente;
+    @Column(name = "emailCliente")
+    private String emailCliente;
 
     @Column(name = "clave_cliente")
     private String clave_cliente;
