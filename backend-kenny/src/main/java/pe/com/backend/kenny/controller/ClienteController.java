@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import pe.com.backend.kenny.model.Cliente;
+import pe.com.backend.kenny.model.response.BaseResponse;
 import pe.com.backend.kenny.service.IClienteService;
 
 @RestController
@@ -34,8 +35,8 @@ public class ClienteController {
 	}
 
     @PutMapping("/actualizar")
-    public Cliente actualizarCliente(@RequestBody Cliente cliente){
-        return clienteService.actualizarCliente(cliente);
+    public BaseResponse actualizarCliente(@RequestBody Cliente cliente){
+        return this.clienteService.actualizarCliente(cliente);
     }
 
     @DeleteMapping("/cliente/{idcli}")

@@ -6,9 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.JsonSerializable.Base;
+
+import pe.com.backend.kenny.exception.ItemNoEncontradoException;
 import pe.com.backend.kenny.model.Cliente;
+import pe.com.backend.kenny.model.response.BaseResponse;
 import pe.com.backend.kenny.repository.IClienteRepository;
 import pe.com.backend.kenny.service.IClienteService;
+import pe.com.backend.kenny.util.Constantes;
 
 @Service
 public class IClienteServiceImpl implements IClienteService{
@@ -25,18 +30,18 @@ public class IClienteServiceImpl implements IClienteService{
     }
 
     @Override
-    public Cliente actualizarCliente(Cliente objCliente) {
+    public BaseResponse actualizarCliente(Cliente objCliente) {
         // actualizar cliente
-        Cliente objClienteAct = clienteRepo.findById(objCliente.getId_cliente()).orElse(null);
-        objClienteAct.setNombre_cliente(objCliente.getNombre_cliente());
-        objClienteAct.setApellidos_cliente(objCliente.getApellidos_cliente());
-        objClienteAct.setDni_cliente(objCliente.getDni_cliente());
-        objClienteAct.setFec_nac_cliente(objCliente.getFec_nac_cliente());
-        objClienteAct.setEdad_cliente(objCliente.getEdad_cliente());
-        objClienteAct.setEmailCliente(objCliente.getEmailCliente());
-        objClienteAct.setClave_cliente(objCliente.getClave_cliente());
-        objClienteAct.setEstado_cliente(objCliente.getEstado_cliente());
-        return clienteRepo.save(objClienteAct);
+        if(this.clienteRepo.existsById(objCliente.getId_cliente()))
+        {
+            objCliente.setClave_cliente(this.passwordEncoder.encode(objCliente.getClave_cliente()));
+            this.clienteRepo.save(objCliente);
+            return BaseResponse.builder()
+                    .codRespuesta(Constantes.CODIGO_EXITO_ACTUALIZACION)
+                    .msjRespuesta(Constantes.MENSAJE_EXITO_ACTUALIZACION)
+                    .build();
+        }
+        throw new ItemNoEncontradoException("Cliente no encontrado");
     }
 
     @Override
