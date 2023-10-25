@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import pe.com.backend.kenny.model.Comida;
+import pe.com.backend.kenny.model.request.ComidaRegistrarRequest;
 import pe.com.backend.kenny.model.response.BaseResponse;
 import pe.com.backend.kenny.service.IComidaService;
 
@@ -36,7 +37,7 @@ public class ComidaController {
 	
 	@PostMapping("/registrar")
 	@ResponseBody
-	public Comida insertarComida(@RequestBody Comida comida) {
+	public Comida insertarComida(@RequestBody ComidaRegistrarRequest comida) {
 		return servicioComida.insertarComida(comida);
 	}
 	

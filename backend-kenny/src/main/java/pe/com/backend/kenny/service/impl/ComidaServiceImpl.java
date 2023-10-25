@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pe.com.backend.kenny.model.Comida;
+import pe.com.backend.kenny.model.Sandwich;
+import pe.com.backend.kenny.model.request.ComidaRegistrarRequest;
 import pe.com.backend.kenny.model.response.BaseResponse;
 import pe.com.backend.kenny.repository.IComidaRepository;
+import pe.com.backend.kenny.repository.ISandwichRepository;
 import pe.com.backend.kenny.service.IComidaService;
 
 @Service
@@ -15,6 +18,8 @@ public class ComidaServiceImpl implements IComidaService {
 	
 	@Autowired
 	private IComidaRepository repoComida;
+	@Autowired
+	private ISandwichRepository repoSandwich;
 
 	@Override
 	public List<Comida> listarComida() {
@@ -27,10 +32,46 @@ public class ComidaServiceImpl implements IComidaService {
 	}
 
 	@Override
-	public Comida insertarComida(Comida objComida) {
-		return repoComida.save(objComida);
+	public Comida insertarComida(ComidaRegistrarRequest objComida) {
+		Comida comidaNueva = new Comida();
+		
+		comidaNueva.setIdComida(generarCodigoComida());
+		comidaNueva.setDescComida(objComida.getDescComida());
+		comidaNueva.setPrecioComida(objComida.getPrecioComida());
+		comidaNueva.setStockComida(objComida.getStockComida());
+		comidaNueva.setTipoComida(objComida.getTipoComida());
+		comidaNueva.setEstadoComida(1);
+		
+		Comida comidaGuardada = repoComida.save(comidaNueva);
+		
+		if (objComida.getTipoComida().equals("Sandwich")) {
+			Sandwich nuevoSandwich = new Sandwich();
+			String codigoComida = comidaNueva.getIdComida();
+			nuevoSandwich.setIdComida(codigoComida);
+			repoSandwich.save(nuevoSandwich);
+		}
+		return comidaGuardada;
 	}
 
+	private String generarCodigoComida() {
+		String codigo;
+		int contador;
+		
+		String ultimoIdRegistrado = repoComida.getUltimoIdComida();
+		
+		if(ultimoIdRegistrado == null) {
+			return codigo = "C001";
+		}
+		
+		String parteNumerica = ultimoIdRegistrado.substring(1);
+		contador = Integer.parseInt(parteNumerica) + 1;
+		
+		codigo = String.format("C%03d", contador);
+		contador++;
+		return codigo;
+		
+	}
+	
 	@Override
 	public BaseResponse actualizarComida(Comida objComida) {
 		Comida objComidaAct = repoComida.findById(objComida.getIdComida()).orElse(null);
