@@ -6,12 +6,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "tb_cliente")
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class Cliente {
 
@@ -39,10 +41,10 @@ public class Cliente {
     private int edad_cliente;
 
     @Column(name = "email_cliente")
-    private String correo;
+    private String email_cliente;
 
     @Column(name = "clave_cliente")
-    private String clave;
+    private String clave_cliente;
 
     @Column(name = "estado_cliente")
     private int estado_cliente;

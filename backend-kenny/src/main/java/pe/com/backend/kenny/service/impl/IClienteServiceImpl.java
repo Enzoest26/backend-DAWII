@@ -3,6 +3,7 @@ package pe.com.backend.kenny.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import pe.com.backend.kenny.model.Cliente;
@@ -14,9 +15,12 @@ public class IClienteServiceImpl implements IClienteService{
 
     private @Autowired IClienteRepository clienteRepo;
 
+    private @Autowired PasswordEncoder passwordEncoder;
+
     @Override
     public Cliente registrarCliente(Cliente objCliente) {
         // registrar cliente
+        objCliente.setClave_cliente(this.passwordEncoder.encode(objCliente.getClave_cliente()));
         return this.clienteRepo.save(objCliente);
     }
 
@@ -29,8 +33,8 @@ public class IClienteServiceImpl implements IClienteService{
         objClienteAct.setDni_cliente(objCliente.getDni_cliente());
         objClienteAct.setFec_nac_cliente(objCliente.getFec_nac_cliente());
         objClienteAct.setEdad_cliente(objCliente.getEdad_cliente());
-        objClienteAct.setCorreo(objCliente.getCorreo());
-        objClienteAct.setClave(objCliente.getClave());
+        objClienteAct.setEmail_cliente(objCliente.getEmail_cliente());
+        objClienteAct.setClave_cliente(objCliente.getClave_cliente());
         objClienteAct.setEstado_cliente(objCliente.getEstado_cliente());
         return clienteRepo.save(objClienteAct);
     }
@@ -54,9 +58,9 @@ public class IClienteServiceImpl implements IClienteService{
     }
 
     @Override
-	public List<Cliente> buscarClientePorCorreo(String correo) 
+	public List<Cliente> buscarClientePorEmail(String email) 
 	{
-		return this.clienteRepo.findByCorreo(correo);
+		return this.clienteRepo.findByEmail_cliente(email);
 	}
 
     

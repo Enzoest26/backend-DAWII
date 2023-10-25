@@ -28,10 +28,9 @@ public class ClienteController {
     }
 
     @PostMapping("/registrar")
-    @ResponseBody
     public Cliente registrarCliente(@RequestBody Cliente cliente)
 	{
-		return clienteService.registrarCliente(cliente);
+		return this.clienteService.registrarCliente(cliente);
 	}
 
     @PutMapping("/actualizar")

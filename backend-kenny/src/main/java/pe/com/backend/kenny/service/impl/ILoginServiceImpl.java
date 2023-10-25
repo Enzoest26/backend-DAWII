@@ -20,11 +20,11 @@ public class ILoginServiceImpl implements ILoginService{
     @Override
     public boolean verificarIngreso(Login login) {
         List<Cliente> cliente =
-        this.clienteService.buscarClientePorCorreo(login.getIdUsuario());
+        this.clienteService.buscarClientePorEmail(login.getIdUsuario());
         if(cliente.isEmpty()){
             return false;
         }
-        if(!passwordEncoder.matches(login.getClave(), cliente.get(0).getClave())){
+        if(!passwordEncoder.matches(login.getClave(), cliente.get(0).getClave_cliente())){
             return false;
         }
         return true;
