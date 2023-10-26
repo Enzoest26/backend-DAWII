@@ -45,9 +45,19 @@ public class IClienteServiceImpl implements IClienteService{
     }
 
     @Override
-    public void eliminarCliente(int idcliente) {
-        // eliminar cliente
-        clienteRepo.deleteById(idcliente);
+    public BaseResponse eliminarCliente(int idcliente) {
+    	if(this.clienteRepo.existsById(idcliente)) {
+    		Cliente cliente = clienteRepo.findById(idcliente).orElse(null);
+    		if(cliente != null) {
+    			cliente.setEstado_cliente(0);
+    			this.clienteRepo.save(cliente);
+    			return BaseResponse.builder()
+    					.codRespuesta(Constantes.CODIGO_EXITO_ELIMINACION)
+    					.msjRespuesta(Constantes.MENSAJE_EXITO_ELIMINACION)
+    					.build();
+    		}
+    	}
+        throw new ItemNoEncontradoException("Cliente no encontrado");
     }
 
     @Override

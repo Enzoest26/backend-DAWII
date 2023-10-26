@@ -13,7 +13,7 @@ public interface IClienteService {
 
     public BaseResponse actualizarCliente(Cliente objCliente);
 
-    public void eliminarCliente(int idcliente);
+    public BaseResponse eliminarCliente(int idcliente);
 
     public Boolean existeCliente(Integer id);
 

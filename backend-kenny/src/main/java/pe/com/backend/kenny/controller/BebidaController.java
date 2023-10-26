@@ -14,10 +14,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import pe.com.backend.kenny.model.Bebida;
+import pe.com.backend.kenny.model.CategoriaBebida;
+import pe.com.backend.kenny.model.TamanioBebida;
+import pe.com.backend.kenny.model.TipoBebida;
 import pe.com.backend.kenny.model.request.BebidaActualizarRequest;
 import pe.com.backend.kenny.model.request.BebidaRegistrarRequest;
 import pe.com.backend.kenny.model.response.BaseResponse;
 import pe.com.backend.kenny.service.BebidaService;
+import pe.com.backend.kenny.service.ICategoriaBebidaService;
+import pe.com.backend.kenny.service.ITamanioBebidaService;
+import pe.com.backend.kenny.service.ITipoBebidaService;
 
 @RestController
 @RequestMapping("/bebida")
@@ -25,6 +31,12 @@ public class BebidaController {
 
 	@Autowired
 	private BebidaService bebidaService;
+	@Autowired
+	private ITipoBebidaService tipoBebidaService;
+	@Autowired
+	private ITamanioBebidaService tamanioBebidaService;
+	@Autowired
+	private ICategoriaBebidaService categoriaBebidaService;
 	
 	@GetMapping("/lista-general")
 	public List<Bebida> listadoTodasBebidas() {
@@ -51,4 +63,18 @@ public class BebidaController {
 		return bebidaService.eliminarBebida(idBebida);
 	}
 	
+	@GetMapping("/tipos")
+	public List<TipoBebida> listarTiposBebida() {
+		return tipoBebidaService.tiposBebida();
+	}
+	
+	@GetMapping("/tamaños")
+	public List<TamanioBebida> listarTamaniosBebida() {
+		return tamanioBebidaService.tamaniosBebida();
+	}
+	
+	@GetMapping("/categorias")
+	public List<CategoriaBebida> listarCategoriasBebida() {
+		return categoriaBebidaService.categoriasBebida();
+	}
 }
