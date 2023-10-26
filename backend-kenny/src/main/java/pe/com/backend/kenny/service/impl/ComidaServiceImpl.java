@@ -6,11 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pe.com.backend.kenny.model.Comida;
+import pe.com.backend.kenny.model.Postre;
 import pe.com.backend.kenny.model.Sandwich;
+import pe.com.backend.kenny.model.TipoPostre;
 import pe.com.backend.kenny.model.request.ComidaRegistrarRequest;
 import pe.com.backend.kenny.model.response.BaseResponse;
 import pe.com.backend.kenny.repository.IComidaRepository;
+import pe.com.backend.kenny.repository.IPostreRepository;
 import pe.com.backend.kenny.repository.ISandwichRepository;
+import pe.com.backend.kenny.repository.ITipoPostreRepository;
 import pe.com.backend.kenny.service.IComidaService;
 
 @Service
@@ -20,6 +24,10 @@ public class ComidaServiceImpl implements IComidaService {
 	private IComidaRepository repoComida;
 	@Autowired
 	private ISandwichRepository repoSandwich;
+	@Autowired
+	private IPostreRepository repoPostre;
+	@Autowired
+	private ITipoPostreRepository repoTipoPostre;
 
 	@Override
 	public List<Comida> listarComida() {
@@ -46,10 +54,18 @@ public class ComidaServiceImpl implements IComidaService {
 		
 		if (objComida.getTipoComida().equals("Sandwich")) {
 			Sandwich nuevoSandwich = new Sandwich();
-			String codigoComida = comidaNueva.getIdComida();
-			nuevoSandwich.setIdComida(codigoComida);
+			nuevoSandwich.setIdComida(comidaGuardada.getIdComida());
 			repoSandwich.save(nuevoSandwich);
 		}
+		
+		if (objComida.getTipoComida().equals("Postre")) {
+			TipoPostre tipoPostre = repoTipoPostre.findById(objComida.getIdTipoPostre()).orElse(null);
+			Postre nuevoPostre = new Postre();
+			nuevoPostre.setIdComida(comidaGuardada.getIdComida());
+			nuevoPostre.setTipoPostre(tipoPostre);
+			repoPostre.save(nuevoPostre);
+		}
+		
 		return comidaGuardada;
 	}
 

@@ -6,7 +6,7 @@ import lombok.Data;
 public class ComidaRegistrarRequest {
 	
 	//private String idComida; se autogenera
-	
+
 	private String descComida;
 	
 	private double precioComida;
@@ -14,6 +14,8 @@ public class ComidaRegistrarRequest {
 	private int stockComida;
 	
 	private String tipoComida;
+	
+	private int idTipoPostre;
 
 	//private int estadoComida; por defecto 1 al registrar
 }
