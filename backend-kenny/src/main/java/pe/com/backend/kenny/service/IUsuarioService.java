@@ -9,6 +9,8 @@ public interface IUsuarioService {
 	
 	public List<Usuario> listarUsuarios();
 	
+	public Usuario buscarPorId(Integer id);
+	
 	public Usuario registrarUsuario(Usuario usuario);
 	
 	public BaseResponse actualizarUsuario(Usuario usuario);

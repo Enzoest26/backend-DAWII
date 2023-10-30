@@ -69,4 +69,12 @@ public class UsuarioServiceImpl implements IUsuarioService
 		throw new ItemNoEncontradoException("Usuario no encontrado");
 	}
 
+	@Override
+	public Usuario buscarPorId(Integer id) {
+		Usuario usuario = this.usuarioRepository.findById(id).orElse(null);
+		if(usuario == null)
+			throw new ItemNoEncontradoException("Usuario no encontrado");
+		return usuario;
+	}
+
 }
