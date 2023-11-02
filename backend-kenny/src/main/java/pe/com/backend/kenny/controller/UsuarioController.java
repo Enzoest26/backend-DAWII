@@ -38,7 +38,7 @@ public class UsuarioController {
 	}
 	
 	@PutMapping("/actualizar")
-	public BaseResponse actualizarUsuario(@RequestBody Usuario usuario){
+	public Usuario actualizarUsuario(@RequestBody Usuario usuario){
 		return this.usuarioService.actualizarUsuario(usuario);
 	}
 	

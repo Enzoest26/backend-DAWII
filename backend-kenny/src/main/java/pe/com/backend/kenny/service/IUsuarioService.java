@@ -13,7 +13,7 @@ public interface IUsuarioService {
 	
 	public Usuario registrarUsuario(Usuario usuario);
 	
-	public BaseResponse actualizarUsuario(Usuario usuario);
+	public Usuario actualizarUsuario(Usuario usuario);
 	
 	public BaseResponse eliminarUsuario(Integer id);
 }

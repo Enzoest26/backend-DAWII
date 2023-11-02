@@ -36,16 +36,18 @@ public class UsuarioServiceImpl implements IUsuarioService
 	}
 
 	@Override
-	public BaseResponse actualizarUsuario(Usuario usuario) {
+	public Usuario actualizarUsuario(Usuario usuario) {
 		if(this.usuarioRepository.existsById(usuario.getIdUsuario()))
 		{
 			usuario.setTipoUsuario(this.tipoUsuarioService.buscarTipoUsuarioPorID(usuario.getIdTipoUsuario()));
 			usuario.setClave(this.passwordEncoder.encode(usuario.getClave()));
-			this.usuarioRepository.save(usuario);
+			return this.usuarioRepository.save(usuario);
+			/*
 			return BaseResponse.builder()
 					.codRespuesta(Constantes.CODIGO_EXITO_ACTUALIZACION)
 					.msjRespuesta(Constantes.MENSAJE_EXITO_ACTUALIZACION)
 					.build();
+					*/
 		}
 		throw new ItemNoEncontradoException("Usuario no encontrado");
 	}
