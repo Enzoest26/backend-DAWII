@@ -30,16 +30,17 @@ public class IClienteServiceImpl implements IClienteService{
     }
 
     @Override
-    public BaseResponse actualizarCliente(Cliente objCliente) {
+    public Cliente actualizarCliente(Cliente objCliente) {
         // actualizar cliente
         if(this.clienteRepo.existsById(objCliente.getId_cliente()))
         {
             objCliente.setClave_cliente(this.passwordEncoder.encode(objCliente.getClave_cliente()));
             this.clienteRepo.save(objCliente);
+            /*
             return BaseResponse.builder()
                     .codRespuesta(Constantes.CODIGO_EXITO_ACTUALIZACION)
                     .msjRespuesta(Constantes.MENSAJE_EXITO_ACTUALIZACION)
-                    .build();
+                    .build();*/
         }
         throw new ItemNoEncontradoException("Cliente no encontrado");
     }

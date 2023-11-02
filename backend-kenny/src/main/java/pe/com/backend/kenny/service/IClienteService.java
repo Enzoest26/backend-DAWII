@@ -11,7 +11,7 @@ public interface IClienteService {
 
     public Cliente registrarCliente(Cliente objCliente);
 
-    public BaseResponse actualizarCliente(Cliente objCliente);
+    public Cliente actualizarCliente(Cliente objCliente);
 
     public BaseResponse eliminarCliente(int idcliente);
 

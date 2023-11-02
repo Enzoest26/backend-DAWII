@@ -36,7 +36,7 @@ public class ClienteController {
 	}
 
     @PutMapping("/actualizar")
-    public BaseResponse actualizarCliente(@RequestBody Cliente cliente){
+    public Cliente actualizarCliente(@RequestBody Cliente cliente){
         return this.clienteService.actualizarCliente(cliente);
     }
 
