@@ -13,10 +13,12 @@ public interface IClienteService {
 
     public Cliente actualizarCliente(Cliente objCliente);
 
-    public BaseResponse eliminarCliente(int idcliente);
+    public BaseResponse eliminarCliente(Integer idcliente);
 
     public Boolean existeCliente(Integer id);
 
     public List<Cliente> buscarClientePorEmail(String email);
+    
+    public Cliente buscarPorId(Integer id);
 
 }

@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonSerializable.Base;
 
 import pe.com.backend.kenny.exception.ItemNoEncontradoException;
 import pe.com.backend.kenny.model.Cliente;
+import pe.com.backend.kenny.model.Usuario;
 import pe.com.backend.kenny.model.response.BaseResponse;
 import pe.com.backend.kenny.repository.IClienteRepository;
 import pe.com.backend.kenny.service.IClienteService;
@@ -46,8 +47,9 @@ public class IClienteServiceImpl implements IClienteService{
     }
 
     @Override
-    public BaseResponse eliminarCliente(int idcliente) {
-    	if(this.clienteRepo.existsById(idcliente)) {
+    public BaseResponse eliminarCliente(Integer idcliente) {
+    	if(this.clienteRepo.existsById(idcliente)) 
+    	{
     		Cliente cliente = clienteRepo.findById(idcliente).orElse(null);
     		if(cliente != null) {
     			cliente.setEstado_cliente(0);
@@ -77,6 +79,15 @@ public class IClienteServiceImpl implements IClienteService{
 	public List<Cliente> buscarClientePorEmail(String email) 
 	{
 		return this.clienteRepo.findByEmailCliente(email);
+	}
+
+	@Override
+	public Cliente buscarPorId(Integer id) 
+	{		
+		Cliente cliente = this.clienteRepo.findById(id).orElse(null);
+		if(cliente == null)
+			throw new ItemNoEncontradoException("Cliente no encontrado");
+		return cliente;
 	}
 
     

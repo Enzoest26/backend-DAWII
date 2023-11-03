@@ -15,16 +15,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import pe.com.backend.kenny.model.Cliente;
+import pe.com.backend.kenny.model.Usuario;
 import pe.com.backend.kenny.model.response.BaseResponse;
 import pe.com.backend.kenny.service.IClienteService;
 
 @RestController
-// @RequestMapping("/cliente")
+@RequestMapping("/cliente")
 public class ClienteController {
     
     private @Autowired IClienteService clienteService;
 
-    @GetMapping("/clientes")
+    @GetMapping("/buscarClientes")
     public List<Cliente> listarClientes(){
         return clienteService.listarCliente();
     }
@@ -40,10 +41,15 @@ public class ClienteController {
         return this.clienteService.actualizarCliente(cliente);
     }
 
-    @DeleteMapping("/cliente")
-	public BaseResponse eliminarCliente(@RequestParam int idCliente) {
-		return clienteService.eliminarCliente(idCliente);
+    @DeleteMapping("/eliminar/{idcliente}")
+	public BaseResponse eliminarCliente(@PathVariable("idcliente") Integer idcliente) {
+		return clienteService.eliminarCliente(idcliente);
 	}
+
+    @GetMapping("/buscarPorId/{id}")
+    public Cliente buscarPorId(@PathVariable Integer id) {
+    	return this.clienteService.buscarPorId(id);
+    }
 
 
 }
