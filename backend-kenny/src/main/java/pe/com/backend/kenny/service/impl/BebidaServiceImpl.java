@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pe.com.backend.kenny.exception.ItemNoEncontradoException;
 import pe.com.backend.kenny.model.Bebida;
 import pe.com.backend.kenny.model.CategoriaBebida;
 import pe.com.backend.kenny.model.TamanioBebida;
@@ -89,7 +90,7 @@ public class BebidaServiceImpl implements BebidaService{
 	}
 
 	@Override
-	public BaseResponse actualizarBebida(String idBebida, BebidaActualizarRequest request) {
+	public Bebida actualizarBebida(String idBebida, BebidaActualizarRequest request) {
 		Bebida bebida = repoBebida.findById(idBebida).orElse(null);
 		CategoriaBebida categoriaBebida = repoCategoria.findById(request.getIdCategoriaBebida()).orElse(null);
 		TipoBebida tipoBebida = repoTipo.findById(request.getIdTipoBebida()).orElse(null);
@@ -97,10 +98,8 @@ public class BebidaServiceImpl implements BebidaService{
 		
 		if(bebida == null || categoriaBebida == null || tipoBebida == null || tamanioBebida == null) {
 			System.out.println(bebida + " - " + categoriaBebida + " - " + tipoBebida + " - " + tamanioBebida );
-			return BaseResponse.builder()
-					.codRespuesta("0")
-					.msjRespuesta("Ocurrió un error al actualizar")
-					.build();
+			System.out.println("Error al actualizar");
+			throw new ItemNoEncontradoException("Bebida no encontrada");
 		}
 		
 		bebida.setDescripcionBebida(request.getDescripcionBebida());
@@ -110,12 +109,8 @@ public class BebidaServiceImpl implements BebidaService{
 		bebida.setCategoriaBebida(categoriaBebida);
 		bebida.setTipoBebida(tipoBebida);
 		bebida.setTamanioBebida(tamanioBebida);
-		repoBebida.save(bebida);
-		
-		return BaseResponse.builder()
-				.codRespuesta("1")
-				.msjRespuesta("Bebida con id " + idBebida + " actualizada con éxito")
-				.build();		
+			
+		return repoBebida.save(bebida);
 	}
 
 	@Override

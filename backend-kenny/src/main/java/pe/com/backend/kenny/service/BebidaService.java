@@ -17,7 +17,7 @@ public interface BebidaService {
 	
 	public Bebida registrarBebida(BebidaRegistrarRequest bebida);
 	
-	public BaseResponse actualizarBebida(String idBebida, BebidaActualizarRequest request);
+	public Bebida actualizarBebida(String idBebida, BebidaActualizarRequest request);
 	
 	public BaseResponse eliminarBebida(String idBebida);
 }

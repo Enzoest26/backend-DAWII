@@ -54,7 +54,7 @@ public class BebidaController {
 	}
 	
 	@PutMapping("/actualizar")
-	public BaseResponse actualizarBebida(@RequestParam String idBebida, @RequestBody BebidaActualizarRequest request) {
+	public Bebida actualizarBebida(@RequestParam String idBebida, @RequestBody BebidaActualizarRequest request) {
 		return bebidaService.actualizarBebida(idBebida, request);
 	}
 	

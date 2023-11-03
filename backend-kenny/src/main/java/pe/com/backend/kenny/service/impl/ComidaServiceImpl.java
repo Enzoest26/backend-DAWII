@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pe.com.backend.kenny.exception.ItemNoEncontradoException;
 import pe.com.backend.kenny.model.Comida;
 import pe.com.backend.kenny.model.Postre;
 import pe.com.backend.kenny.model.Sandwich;
@@ -89,7 +90,7 @@ public class ComidaServiceImpl implements IComidaService {
 	}
 	
 	@Override
-	public BaseResponse actualizarComida(Comida objComida) {
+	public Comida actualizarComida(Comida objComida) {
 		Comida objComidaAct = repoComida.findById(objComida.getIdComida()).orElse(null);
 		if (repoComida.existsById(objComida.getIdComida())) {
 			objComidaAct.setDescComida(objComida.getDescComida());
@@ -97,16 +98,17 @@ public class ComidaServiceImpl implements IComidaService {
 			objComidaAct.setStockComida(objComida.getStockComida());
 			objComidaAct.setTipoComida(objComida.getTipoComida());
 			objComidaAct.setEstadoComida(objComida.getEstadoComida());
-			repoComida.save(objComidaAct);
-			return BaseResponse.builder()
+			return repoComida.save(objComidaAct);
+			/*return BaseResponse.builder()
 					.codRespuesta("1")
 					.msjRespuesta("Se actualizó correctamente")
-					.build();
+					.build();*/
 		}
-		return BaseResponse.builder()
+		throw new ItemNoEncontradoException("Comida no encontrada");
+		/*return BaseResponse.builder()
 				.codRespuesta("0")
 				.msjRespuesta("Comida no existente")
-				.build();
+				.build();*/
 	}
 
 	@Override

@@ -10,7 +10,7 @@ public interface IComidaService {
 	public List<Comida>listarComida();
 	public Comida obtenerComida(String idComida);
 	public Comida insertarComida(ComidaRegistrarRequest objComida);
-	public BaseResponse actualizarComida(Comida objComida);
+	public Comida actualizarComida(Comida objComida);
 	public BaseResponse eliminarComida(String idComida);
 
 }

@@ -43,7 +43,7 @@ public class ComidaController {
 	
 	@PutMapping("/actualizar")
 	@ResponseBody
-	public BaseResponse actualizarComida(@RequestBody Comida comida) {
+	public Comida actualizarComida(@RequestBody Comida comida) {
 		return servicioComida.actualizarComida(comida);
 	}
 	
