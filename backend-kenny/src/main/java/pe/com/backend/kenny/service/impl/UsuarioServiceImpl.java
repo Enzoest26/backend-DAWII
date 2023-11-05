@@ -79,4 +79,10 @@ public class UsuarioServiceImpl implements IUsuarioService
 		return usuario;
 	}
 
+	@Override
+	public List<Usuario> buscarClientePorEmail(String email) {
+		
+		return this.usuarioRepository.findByCorreo(email);
+	}
+
 }

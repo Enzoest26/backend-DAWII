@@ -15,5 +15,7 @@ public interface IUsuarioService {
 	
 	public Usuario actualizarUsuario(Usuario usuario);
 	
+	public List<Usuario> buscarClientePorEmail(String email);
+	
 	public BaseResponse eliminarUsuario(Integer id);
 }
