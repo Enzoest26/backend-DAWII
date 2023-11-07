@@ -36,7 +36,7 @@ public class IClienteServiceImpl implements IClienteService{
         if(this.clienteRepo.existsById(objCliente.getId_cliente()))
         {
             objCliente.setClave_cliente(this.passwordEncoder.encode(objCliente.getClave_cliente()));
-            this.clienteRepo.save(objCliente);
+            return this.clienteRepo.save(objCliente);
             /*
             return BaseResponse.builder()
                     .codRespuesta(Constantes.CODIGO_EXITO_ACTUALIZACION)
