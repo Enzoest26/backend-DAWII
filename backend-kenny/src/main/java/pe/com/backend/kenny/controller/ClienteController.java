@@ -20,7 +20,7 @@ import pe.com.backend.kenny.model.response.BaseResponse;
 import pe.com.backend.kenny.service.IClienteService;
 
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/intranet/cliente")
 public class ClienteController {
     
     private @Autowired IClienteService clienteService;

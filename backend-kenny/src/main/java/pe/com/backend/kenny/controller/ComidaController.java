@@ -19,7 +19,7 @@ import pe.com.backend.kenny.model.response.BaseResponse;
 import pe.com.backend.kenny.service.IComidaService;
 
 @RestController
-@RequestMapping("/comida")
+@RequestMapping("/intranet/comida")
 public class ComidaController {
 	
 	@Autowired
