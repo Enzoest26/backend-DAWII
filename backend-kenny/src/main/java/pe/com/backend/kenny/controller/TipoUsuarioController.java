@@ -11,7 +11,7 @@ import pe.com.backend.kenny.model.TipoUsuario;
 import pe.com.backend.kenny.service.ITipoUsuarioService;
 
 @RestController
-@RequestMapping("/tipo-usuario")
+@RequestMapping("/intranet/tipo-usuario")
 public class TipoUsuarioController {
 	
 	private @Autowired ITipoUsuarioService tipoUsuarioService;

@@ -17,7 +17,7 @@ import pe.com.backend.kenny.model.response.BaseResponse;
 import pe.com.backend.kenny.service.IUsuarioService;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/intranet/usuario")
 public class UsuarioController {
 	
 	private @Autowired IUsuarioService usuarioService;

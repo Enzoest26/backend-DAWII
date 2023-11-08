@@ -20,4 +20,10 @@ public class Constantes {
 	public static final String CODIGO_ERROR_HTTP_MESSAGE_NOT_READABLE = "400";
 	public static final String MENSAJE_ERROR_HTTP_MESSAGE_NOT_READABLE = "Contenido de su petición inválida. Compruebe si esta enviando un cuerpo si es requerido.";
 	
+	public static final String CODIGO_AUTHORIZATION_ERROR = "403";
+	public static final String MENSAJE_ERROR_AUTHORIZATION = "Authorizacion invalida.";
+	
+	public static final String CODIGO_LOGIN_FAILED = "1";
+	public static final String MENSAJE_ERROR_LOGIN_FAILED = "Contraseña y/o incorrecta.";
+	
 }
