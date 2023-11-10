@@ -15,6 +15,8 @@ public interface BebidaService {
 	//obtener todas las bebidas con estado 1(activo)
 	public List<Bebida> listadoBebidasEstadoActivo();
 	
+	public Bebida buscarPorId(String idBebida);
+	
 	public Bebida registrarBebida(BebidaRegistrarRequest bebida);
 	
 	public Bebida actualizarBebida(String idBebida, BebidaActualizarRequest request);

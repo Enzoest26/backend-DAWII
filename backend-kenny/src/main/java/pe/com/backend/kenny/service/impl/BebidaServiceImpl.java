@@ -46,6 +46,15 @@ public class BebidaServiceImpl implements BebidaService{
 	}
 
 	@Override
+	public Bebida buscarPorId(String idBebida) {
+		Bebida bebida = repoBebida.findById(idBebida).orElse(null);
+		if(bebida == null) {
+			throw new ItemNoEncontradoException("Bebida no encontrada");
+		}
+		return bebida;
+	}
+	
+	@Override
 	public Bebida registrarBebida(BebidaRegistrarRequest request) {
 		Bebida bebidaNueva = new Bebida();
 		

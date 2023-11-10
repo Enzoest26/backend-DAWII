@@ -26,7 +26,7 @@ import pe.com.backend.kenny.service.ITamanioBebidaService;
 import pe.com.backend.kenny.service.ITipoBebidaService;
 
 @RestController
-@RequestMapping("/bebida")
+@RequestMapping("/intranet/bebida")
 public class BebidaController {
 
 	@Autowired
@@ -46,6 +46,11 @@ public class BebidaController {
 	@GetMapping("/estado-activo")
 	public List<Bebida> listadoBebidasEstadoActivo() {
 		return bebidaService.listadoBebidasEstadoActivo();
+	}
+	
+	@GetMapping("/buscarPorId/{idBebida}")
+	public Bebida buscarPorId(@PathVariable String idBebida){
+		return bebidaService.buscarPorId(idBebida);
 	}
 	
 	@PostMapping("/registrar")
