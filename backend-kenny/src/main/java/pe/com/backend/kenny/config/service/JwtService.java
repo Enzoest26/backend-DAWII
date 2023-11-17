@@ -16,7 +16,7 @@ public class JwtService {
 	
 	private static final String LLAVE_PRIVADA = "AEA";
 	
-	private static final Long TIEMPO_EXPIRACION = 1800 * 60 * (long) 10;
+	private static final Long TIEMPO_EXPIRACION = 1800 * 60 * (long) 100;
 	
 	
 	
