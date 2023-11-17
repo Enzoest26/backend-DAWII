@@ -1,8 +1,15 @@
 package pe.com.backend.kenny.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import pe.com.backend.kenny.exception.ItemNoEncontradoException;
@@ -10,6 +17,7 @@ import pe.com.backend.kenny.model.Comida;
 import pe.com.backend.kenny.model.Postre;
 import pe.com.backend.kenny.model.Sandwich;
 import pe.com.backend.kenny.model.TipoPostre;
+import pe.com.backend.kenny.model.dto.DtoComidaCatalogo;
 import pe.com.backend.kenny.model.request.ComidaRegistrarRequest;
 import pe.com.backend.kenny.model.response.BaseResponse;
 import pe.com.backend.kenny.repository.IComidaRepository;
@@ -126,6 +134,36 @@ public class ComidaServiceImpl implements IComidaService {
 				.codRespuesta("1")
 				.msjRespuesta("Se eliminó correctamente")
 				.build();
+	}
+
+	@Override
+	public Page<Comida> listarComidaActivosPaginado(Integer pagina) {
+		Pageable paginado = PageRequest.of(pagina - 1, 10);
+		return this.repoComida.buscarEstadoComidaActivos(paginado);
+	}
+
+	@Override
+	public Map<String, Object> listarComidasCatalogo(Integer pagina) {
+		Page<Comida> paginadoComidas = this.listarComidaActivosPaginado(pagina);
+		List<Comida> contenidoComidas = paginadoComidas.getContent();
+		List<DtoComidaCatalogo> responseListadoComidas = new ArrayList<>();
+		contenidoComidas.stream().forEach(s -> {
+			DtoComidaCatalogo catalogo = new DtoComidaCatalogo();
+			catalogo.setDescComida(s.getDescComida());
+			catalogo.setEstadoComida(s.getEstadoComida());
+			catalogo.setIdComida(s.getIdComida());
+			catalogo.setPrecioComida(s.getPrecioComida());
+			catalogo.setTipoComida(s.getTipoComida());
+			if(s.getTipoComida().equals("Postre"))
+				catalogo.setPostre(this.repoPostre.findByIdComida(s.getIdComida()).get(0));
+			else
+				catalogo.setSandwich(this.repoSandwich.findByIdComida(s.getIdComida()).get(0));
+			responseListadoComidas.add(catalogo);
+		});
+		Map<String, Object> response = new HashMap<>();
+		response.put("content", responseListadoComidas);
+		response.put("totalPaginas", paginadoComidas.getTotalPages());
+		return response;
 	}
 
 }
