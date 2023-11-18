@@ -5,7 +5,9 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import pe.com.backend.kenny.exception.AuthorizationNoEncontradoException;
 import pe.com.backend.kenny.exception.ItemNoEncontradoException;
 import pe.com.backend.kenny.exception.LoginFailedException;
@@ -68,4 +70,6 @@ public class RestAdviceController {
 				.descripcion(exception.getMessage())
 				.build();
 	}
+	
+	
 }

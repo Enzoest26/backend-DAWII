@@ -147,7 +147,7 @@ public class BebidaServiceImpl implements BebidaService{
 
 	@Override
 	public Page<Bebida> listadoBebidasEstadoActivoPaginado(Integer pagina) {
-		Pageable pageable = PageRequest.of(pagina - 1, 10);
+		Pageable pageable = PageRequest.of(pagina - 1, 8);
 		return this.repoBebida.findByEstadoBebida(1, pageable);
 	}
 

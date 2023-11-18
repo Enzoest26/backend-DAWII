@@ -138,7 +138,7 @@ public class ComidaServiceImpl implements IComidaService {
 
 	@Override
 	public Page<Comida> listarComidaActivosPaginado(Integer pagina) {
-		Pageable paginado = PageRequest.of(pagina - 1, 10);
+		Pageable paginado = PageRequest.of(pagina - 1, 8);
 		return this.repoComida.buscarEstadoComidaActivos(paginado);
 	}
 
