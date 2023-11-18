@@ -2,6 +2,8 @@ package pe.com.backend.kenny.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import pe.com.backend.kenny.model.Bebida;
 import pe.com.backend.kenny.model.request.BebidaActualizarRequest;
 import pe.com.backend.kenny.model.request.BebidaRegistrarRequest;
@@ -12,8 +14,15 @@ public interface BebidaService {
 	//obtener todas las bebidas con estado 0(inactivo) y 1(activo)
 	public List<Bebida> listadoTodasBebidas();
 	
-	//obtener todas las bebidas con estado 1(activo)
+	/**
+	 * Obtener todas las bebidas con estado 1(activo)
+	 * */
 	public List<Bebida> listadoBebidasEstadoActivo();
+	
+	/**
+	 * Obtener todas las bebidas con estado 1(activo) y paginado
+	 * */
+	public Page<Bebida> listadoBebidasEstadoActivoPaginado(Integer pagina);
 	
 	public Bebida buscarPorId(String idBebida);
 	

@@ -3,6 +3,9 @@ package pe.com.backend.kenny.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import pe.com.backend.kenny.exception.ItemNoEncontradoException;
@@ -140,6 +143,12 @@ public class BebidaServiceImpl implements BebidaService{
 				.codRespuesta("1")
 				.msjRespuesta("Se eliminó la bebida con id " + idBebida)
 				.build();
+	}
+
+	@Override
+	public Page<Bebida> listadoBebidasEstadoActivoPaginado(Integer pagina) {
+		Pageable pageable = PageRequest.of(pagina - 1, 10);
+		return this.repoBebida.findByEstadoBebida(1, pageable);
 	}
 
 }
