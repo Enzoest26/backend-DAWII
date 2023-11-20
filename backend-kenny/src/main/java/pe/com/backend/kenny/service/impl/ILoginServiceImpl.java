@@ -35,15 +35,16 @@ public class ILoginServiceImpl implements ILoginService{
     @Override
     public LoginResponse verificarIngreso(Login login) 
     {
+    	
         List<Cliente> cliente = this.clienteService.buscarClientePorEmail(login.getIdUsuario());
         if(!cliente.isEmpty())
         {
         	if(passwordEncoder.matches(login.getClave(), cliente.get(0).getClave_cliente()))
             {
-        		UserDetails user = this.userDetailsService.loadUserByUsername(cliente.get(0).getEmailCliente());
-        		String token = jwtService.obtenerToken(new HashMap<>(), user);
+        		//UserDetails user = this.userDetailsService.loadUserByUsername(cliente.get(0).getEmailCliente());
+        		//String token = jwtService.obtenerToken(new HashMap<>(), user);
                 return LoginResponse.builder()
-                		.token(token)
+                		.token("Sin Token")
                 		.rol("USER")
                 		.build();
             }
