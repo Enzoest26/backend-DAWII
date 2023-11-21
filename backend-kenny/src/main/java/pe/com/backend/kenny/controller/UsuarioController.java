@@ -27,6 +27,11 @@ public class UsuarioController {
 		return this.usuarioService.buscarPorId(id);
 	}
 	
+	@GetMapping("/buscarPorEmail/{email}")
+	public Usuario buscarPorEmail(@PathVariable String email){
+		return this.usuarioService.buscarClientePorEmail(email).get(0);
+	}
+	
 	@GetMapping("/buscarTodos")
 	public List<Usuario> listarTodos(){
 		return this.usuarioService.listarUsuarios();

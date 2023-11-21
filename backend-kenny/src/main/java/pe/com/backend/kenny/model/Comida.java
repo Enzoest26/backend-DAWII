@@ -3,6 +3,7 @@ package pe.com.backend.kenny.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,5 +31,9 @@ public class Comida {
 	
 	@Column(name = "estado_comida")
 	private int estadoComida;
+	
+	@Column(name = "imagen")
+	@Lob
+	private byte[] imagen;
 
 }

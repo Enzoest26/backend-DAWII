@@ -57,6 +57,7 @@ public class ComidaServiceImpl implements IComidaService {
 		comidaNueva.setPrecioComida(objComida.getPrecioComida());
 		comidaNueva.setStockComida(objComida.getStockComida());
 		comidaNueva.setTipoComida(objComida.getTipoComida());
+		comidaNueva.setImagen(objComida.getImagen());
 		comidaNueva.setEstadoComida(1);
 		
 		Comida comidaGuardada = repoComida.save(comidaNueva);
@@ -106,6 +107,9 @@ public class ComidaServiceImpl implements IComidaService {
 			objComidaAct.setStockComida(objComida.getStockComida());
 			objComidaAct.setTipoComida(objComida.getTipoComida());
 			objComidaAct.setEstadoComida(objComida.getEstadoComida());
+			if(objComida.getImagen() != null) {
+				objComidaAct.setImagen(objComida.getImagen());
+			}
 			return repoComida.save(objComidaAct);
 			/*return BaseResponse.builder()
 					.codRespuesta("1")
@@ -154,6 +158,7 @@ public class ComidaServiceImpl implements IComidaService {
 			catalogo.setIdComida(s.getIdComida());
 			catalogo.setPrecioComida(s.getPrecioComida());
 			catalogo.setTipoComida(s.getTipoComida());
+			catalogo.setImagen(s.getImagen());
 			if(s.getTipoComida().equals("Postre"))
 				catalogo.setPostre(this.repoPostre.findByIdComida(s.getIdComida()).get(0));
 			else
@@ -162,7 +167,10 @@ public class ComidaServiceImpl implements IComidaService {
 		});
 		Map<String, Object> response = new HashMap<>();
 		response.put("content", responseListadoComidas);
-		response.put("totalPaginas", paginadoComidas.getTotalPages());
+		int totalComidas = this.repoComida.contarTotalPostres() + this.repoComida.contarTotalSandwiches();
+		int pageSize = 8; // Tamaño de página
+		int totalPaginas = (int) Math.ceil((double) totalComidas / pageSize);
+		response.put("totalPaginas", totalPaginas);
 		return response;
 	}
 

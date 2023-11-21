@@ -16,6 +16,8 @@ public class ComidaRegistrarRequest {
 	private String tipoComida;
 	
 	private int idTipoPostre;
+	
+	private byte[] imagen;
 
 	//private int estadoComida; por defecto 1 al registrar
 }

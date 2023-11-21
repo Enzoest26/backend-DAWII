@@ -20,6 +20,8 @@ public class DtoComidaCatalogo
 	
 	private int estadoComida;
 	
+	private byte[] imagen;
+	
 	private Postre postre;
 	
 	private Sandwich sandwich;
