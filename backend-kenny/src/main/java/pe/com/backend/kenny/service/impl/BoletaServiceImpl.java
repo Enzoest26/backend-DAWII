@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import pe.com.backend.kenny.model.Boleta;
 import pe.com.backend.kenny.model.DetalleBoleta;
@@ -72,4 +73,19 @@ public class BoletaServiceImpl implements IBoletaService{
 	public List<Boleta> listarBoletas() {
 		return boletaRepository.findAll();
 	}
+	
+	@Override
+	public List<Boleta> listarPorFiltros(LocalDate fechaInicio, LocalDate fechaFin, Integer idCliente) {
+		return this.boletaRepository.buscarPorFiltros(fechaInicio, fechaFin, idCliente);
+	}
+
+	
+	
+
+	@Override
+	public void exportarExcel(LocalDate fechaInicio, LocalDate fechaFin, Integer idCliente, HttpServletResponse response) {
+		
+		
+	}
 }
+	

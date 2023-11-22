@@ -1,10 +1,12 @@
 package pe.com.backend.kenny.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import pe.com.backend.kenny.model.Boleta;
@@ -19,6 +21,11 @@ public class BoletaController {
 	@GetMapping("/listar")
 	public List<Boleta> listarBoletas(){
 		return boletaService.listarBoletas();
+	}
+	
+	@GetMapping("/buscarPorFiltros")
+	public List<Boleta> listarPorFiltros(@RequestParam LocalDate fechaInicio, @RequestParam LocalDate fechaFin, Integer idCliente){
+		return this.boletaService.listarPorFiltros(fechaInicio, fechaFin, idCliente);
 	}
 
 }
