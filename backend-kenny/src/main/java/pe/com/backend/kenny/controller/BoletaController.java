@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.servlet.http.HttpServletResponse;
 import pe.com.backend.kenny.model.Boleta;
 import pe.com.backend.kenny.service.IBoletaService;
 
@@ -24,8 +25,13 @@ public class BoletaController {
 	}
 	
 	@GetMapping("/buscarPorFiltros")
-	public List<Boleta> listarPorFiltros(@RequestParam LocalDate fechaInicio, @RequestParam LocalDate fechaFin, Integer idCliente){
+	public List<Boleta> listarPorFiltros(@RequestParam LocalDate fechaInicio, @RequestParam LocalDate fechaFin, @RequestParam Integer idCliente){
 		return this.boletaService.listarPorFiltros(fechaInicio, fechaFin, idCliente);
+	}
+	
+	@GetMapping("/exportarExcel")
+	public void exportarExcelPorCriterios(@RequestParam LocalDate fechaInicio, @RequestParam LocalDate fechaFin, @RequestParam Integer idCliente, HttpServletResponse response) {
+		this.exportarExcelPorCriterios(fechaInicio, fechaFin, idCliente, response);
 	}
 
 }

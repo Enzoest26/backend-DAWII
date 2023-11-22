@@ -1,5 +1,6 @@
 package pe.com.backend.kenny.service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,5 +17,5 @@ public interface IBoletaService {
 	
 	List<Boleta> listarPorFiltros(LocalDate fechaInicio, LocalDate fechaFin, Integer idCliente);
 	
-	public void exportarExcel(LocalDate fechaInicio, LocalDate fechaFin, Integer idCliente, HttpServletResponse response);
+	public void exportarExcel(LocalDate fechaInicio, LocalDate fechaFin, Integer idCliente, HttpServletResponse response) throws IOException;
 }
