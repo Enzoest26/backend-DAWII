@@ -20,4 +20,6 @@ public class BebidaRegistrarRequest {
 	private int idTipoBebida;
 
 	private int idTamanioBebida;
+	
+	private byte[] imagen;
 }

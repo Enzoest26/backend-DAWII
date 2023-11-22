@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.data.domain.Page;
 
 import pe.com.backend.kenny.model.Comida;
-import pe.com.backend.kenny.model.dto.DtoComidaCatalogo;
 import pe.com.backend.kenny.model.request.ComidaRegistrarRequest;
 import pe.com.backend.kenny.model.response.BaseResponse;
 

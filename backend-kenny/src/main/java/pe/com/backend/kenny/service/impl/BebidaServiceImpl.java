@@ -74,6 +74,7 @@ public class BebidaServiceImpl implements BebidaService{
 		bebidaNueva.setDescripcionBebida(request.getDescripcionBebida());
 		bebidaNueva.setPrecioBebida(request.getPrecioBebida());
 		bebidaNueva.setStockBebida(request.getStockBebida());
+		bebidaNueva.setImagen(request.getImagen());
 		bebidaNueva.setEstadoBebida(1);
 		bebidaNueva.setCategoriaBebida(categoriaBebida);
 		bebidaNueva.setTipoBebida(tipoBebida);
@@ -121,6 +122,9 @@ public class BebidaServiceImpl implements BebidaService{
 		bebida.setCategoriaBebida(categoriaBebida);
 		bebida.setTipoBebida(tipoBebida);
 		bebida.setTamanioBebida(tamanioBebida);
+		if(request.getImagen() != null) {
+			bebida.setImagen(request.getImagen());
+		}
 			
 		return repoBebida.save(bebida);
 	}

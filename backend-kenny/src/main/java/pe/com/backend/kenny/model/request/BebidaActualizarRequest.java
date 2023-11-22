@@ -21,4 +21,6 @@ public class BebidaActualizarRequest {
 
 	private int idTamanioBebida;
 	
+	private byte[] imagen;
+	
 }

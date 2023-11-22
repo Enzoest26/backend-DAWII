@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,10 @@ public class Bebida {
 	
 	@Column(name = "estado_beb")
 	private int estadoBebida;
+	
+	@Column(name = "imagen")
+	@Lob
+	private byte[] imagen;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_categ_beb")
