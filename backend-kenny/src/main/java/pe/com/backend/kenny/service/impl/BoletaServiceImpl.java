@@ -68,4 +68,8 @@ public class BoletaServiceImpl implements IBoletaService{
 				.msjRespuesta("Orden Exitosa").build();
 	}
 
+	@Override
+	public List<Boleta> listarBoletas() {
+		return boletaRepository.findAll();
+	}
 }
