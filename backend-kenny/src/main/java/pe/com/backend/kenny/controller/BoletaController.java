@@ -1,5 +1,6 @@
 package pe.com.backend.kenny.controller;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -25,13 +26,14 @@ public class BoletaController {
 	}
 	
 	@GetMapping("/buscarPorFiltros")
-	public List<Boleta> listarPorFiltros(@RequestParam LocalDate fechaInicio, @RequestParam LocalDate fechaFin, @RequestParam Integer idCliente){
+	public List<Boleta> listarPorFiltros(@RequestParam(required = false) LocalDate fechaInicio, @RequestParam(required = false) LocalDate fechaFin, @RequestParam(required = false) String idCliente){
+		System.out.println("Entro al controlador");
 		return this.boletaService.listarPorFiltros(fechaInicio, fechaFin, idCliente);
 	}
 	
 	@GetMapping("/exportarExcel")
-	public void exportarExcelPorCriterios(@RequestParam LocalDate fechaInicio, @RequestParam LocalDate fechaFin, @RequestParam Integer idCliente, HttpServletResponse response) {
-		this.exportarExcelPorCriterios(fechaInicio, fechaFin, idCliente, response);
+	public void exportarExcelPorCriterios(@RequestParam(required = false) LocalDate fechaInicio, @RequestParam(required = false) LocalDate fechaFin, @RequestParam(required = false) String idCliente, HttpServletResponse response) throws IOException {
+		this.boletaService.exportarExcel(fechaInicio, fechaFin, idCliente, response);
 	}
 
 }

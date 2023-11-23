@@ -10,6 +10,7 @@ import java.util.List;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -92,7 +93,7 @@ public class BoletaServiceImpl implements IBoletaService{
 	}
 	
 	@Override
-	public List<Boleta> listarPorFiltros(LocalDate fechaInicio, LocalDate fechaFin, Integer idCliente) {
+	public List<Boleta> listarPorFiltros(LocalDate fechaInicio, LocalDate fechaFin, String idCliente) {
 		return this.boletaRepository.buscarPorFiltros(fechaInicio, fechaFin, idCliente);
 	}
 
@@ -100,7 +101,7 @@ public class BoletaServiceImpl implements IBoletaService{
 	
 
 	@Override
-	public void exportarExcel(LocalDate fechaInicio, LocalDate fechaFin, Integer idCliente, HttpServletResponse response) throws IOException {
+	public void exportarExcel(LocalDate fechaInicio, LocalDate fechaFin, String idCliente, HttpServletResponse response) throws IOException {
 		String tituloExcel = "Reporte_Ventas";
 		response.setContentType("application/octet-stream");
 		response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
@@ -128,12 +129,13 @@ public class BoletaServiceImpl implements IBoletaService{
 		} 
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			// TODO: handle exception
 		}
 		
 	}
 	
-	private void construirExportacionBoleta(LocalDate fechaInicio, LocalDate fechaFin, Integer idCliente, List<Boleta> datosBoleta, SXSSFWorkbook sxssfWorkbook, XSSFWorkbook workbook) {
+	private void construirExportacionBoleta(LocalDate fechaInicio, LocalDate fechaFin, String idCliente, List<Boleta> datosBoleta, SXSSFWorkbook sxssfWorkbook, XSSFWorkbook workbook) {
 	
 		Sheet hoja = sxssfWorkbook.getSheetAt(0);
 		hoja.setDefaultRowHeight((short) 380);
@@ -143,16 +145,21 @@ public class BoletaServiceImpl implements IBoletaService{
 			
 			Row fila;
 			Cell celda;
-			hoja.setColumnWidth(0, 2000);
+			
 			
 			//Estilo cabezera
 			CellStyle estiloCab = sxssfWorkbook.createCellStyle();
-	        estiloCab.setFillForegroundColor(IndexedColors.LIGHT_ORANGE.getIndex());
+	        estiloCab.setFillForegroundColor(IndexedColors.DARK_BLUE.getIndex());
+	        estiloCab.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 	        estiloCab.setVerticalAlignment(VerticalAlignment.CENTER);
 	        estiloCab.setBorderTop(BorderStyle.THIN);
 	        estiloCab.setBorderRight(BorderStyle.THIN);
 	        estiloCab.setBorderBottom(BorderStyle.THIN);
 	        estiloCab.setBorderLeft(BorderStyle.THIN);
+	        Font fontCab = sxssfWorkbook.createFont();
+	        fontCab.setColor(IndexedColors.WHITE.getIndex());
+	        fontCab.setBold(true);
+	        estiloCab.setFont(fontCab);
 	        
 	        CellStyle estiloNormal = sxssfWorkbook.createCellStyle();
 	        estiloNormal.setVerticalAlignment(VerticalAlignment.CENTER);
@@ -165,12 +172,13 @@ public class BoletaServiceImpl implements IBoletaService{
 	        
 	        
 	        
-	        hoja.addMergedRegion(new CellRangeAddress(1, 2 , 1, 7));
+	        hoja.addMergedRegion(new CellRangeAddress(0, 1 , 1, 8));
 	        fila = hoja.createRow(0);
 	        celda = fila.createCell(1);
 	        
 	        Font fontBold = workbook.createFont();
 	        fontBold.setUnderline(Font.U_SINGLE);
+	        fontBold.setFontHeightInPoints((short) 16);
 	        fontBold.setBold(true);
 	        
 	        CellStyle estiloTitulo = workbook.createCellStyle();
@@ -189,7 +197,7 @@ public class BoletaServiceImpl implements IBoletaService{
 			
 			celda = fila.createCell(2);
 			celda.setCellStyle(estiloNormal);
-			celda.setCellValue(fechaFin.format(formatter));
+			celda.setCellValue(fechaInicio != null ? fechaInicio.format(formatter) : "");
 			
 			celda = fila.createCell(4);
 			celda.setCellStyle(estiloCab);
@@ -197,7 +205,7 @@ public class BoletaServiceImpl implements IBoletaService{
 			
 			celda = fila.createCell(5);
 			celda.setCellStyle(estiloNormal);
-			celda.setCellValue(fechaFin.format(formatter));
+			celda.setCellValue(fechaFin != null ? fechaFin.format(formatter) : "");
 			
 			
 			celda = fila.createCell(7);
@@ -206,7 +214,7 @@ public class BoletaServiceImpl implements IBoletaService{
 			
 			celda = fila.createCell(8);
 			celda.setCellStyle(estiloNormal);
-			celda.setCellValue(idCliente);
+			celda.setCellValue((idCliente == null || idCliente.equals("")) ? "" :idCliente.toString());
 			
 			
 			//Cabezeras
@@ -235,6 +243,7 @@ public class BoletaServiceImpl implements IBoletaService{
 				fila = hoja.createRow(filaActual + i);
 				
 				celda = fila.createCell(1);
+				
 				celda.setCellStyle(estiloNormal);
 				celda.setCellValue(datosBoleta.get(i).getNumBoleta());
 				
@@ -249,8 +258,11 @@ public class BoletaServiceImpl implements IBoletaService{
 				celda = fila.createCell(4);
 				celda.setCellStyle(estiloNormal);
 				celda.setCellValue(datosBoleta.get(i).getTotalMonto());
-				
-				filaActual ++;
+			
+			}
+			
+			for (int i = 0; i < 8; i++) {
+				hoja.setColumnWidth(i + 1, 5000);
 			}
 			
 			

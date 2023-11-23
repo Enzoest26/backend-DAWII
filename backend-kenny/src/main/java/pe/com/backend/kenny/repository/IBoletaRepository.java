@@ -13,6 +13,6 @@ import pe.com.backend.kenny.model.Boleta;
 public interface IBoletaRepository extends JpaRepository<Boleta, Integer>{
 	
 	@Query("SELECT b FROM Boleta b WHERE (:fechaInicio IS NULL OR :fechaFin IS NULL OR (b.fechaBoleta BETWEEN :fechaInicio AND :fechaFin)) AND "
-			+ "(:idCliente IS NULL OR b.idCliente.id_cliente = :idCliente)")
-	List<Boleta> buscarPorFiltros(LocalDate fechaInicio, LocalDate fechaFin, Integer idCliente);
+			+ "(:idCliente IS NULL OR :idCliente = '' OR b.idCliente.id_cliente = :idCliente)")
+	List<Boleta> buscarPorFiltros(LocalDate fechaInicio, LocalDate fechaFin, String idCliente);
 }

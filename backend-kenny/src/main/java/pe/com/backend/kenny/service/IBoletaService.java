@@ -15,7 +15,7 @@ public interface IBoletaService {
 	
 	List<Boleta> listarBoletas();
 	
-	List<Boleta> listarPorFiltros(LocalDate fechaInicio, LocalDate fechaFin, Integer idCliente);
+	List<Boleta> listarPorFiltros(LocalDate fechaInicio, LocalDate fechaFin, String idCliente);
 	
-	public void exportarExcel(LocalDate fechaInicio, LocalDate fechaFin, Integer idCliente, HttpServletResponse response) throws IOException;
+	public void exportarExcel(LocalDate fechaInicio, LocalDate fechaFin, String idCliente, HttpServletResponse response) throws IOException;
 }
